@@ -1,14 +1,5 @@
 include("../src/HousingLifeCycleWorkhorse.jl")
 
-
-## Testing
-par=benchpar()
-@time val,pol = solve_decproblems(par);
-@time aggmom, pan = simulate(par,pol,val);
-
-@btime val,pol = solve_decproblems(par);
-@btime aggmom, pan = simulate(par,pol,val);
-
 ## Basic usage example. Solves decision problems, then simulates, then plots policy functions, simulated moments, and life-cycle profiles of one individual
 par=benchpar(ns=2,nh=4)
 par.shgrd[1,:] = [true, true, false, false] # Can only rent smallest two units
