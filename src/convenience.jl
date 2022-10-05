@@ -167,6 +167,14 @@ function πν_array!(par,σνs,nν)
 
 end
 
+function finwealth(b)
+    if b > 0
+        finwealth = b
+    else
+        finwealth = 0
+    end
+end
+
 "Function to rescale all parameters to change units. E.g., move from thousands of dollars to hundreds"
 function rescale_parameters(par,fac)
     par.fa .*= fac

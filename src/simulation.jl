@@ -116,6 +116,7 @@ function simulate(par,pol,Val)
     agg_mom = (
         age = par.agegrd,
         x = mean(xmat;dims=2),xse = std(xmat;dims=2),
+        fx = mean(finwealth.(bmat);dims=2),fxse = std(finwealth.(bmat);dims=2),
         c = mean(cmat;dims=2),cse = std(cmat;dims=2),
         b = mean(bmat;dims=2),bse = std(bmat;dims=2),
         rent = mean(par.sgrd[ismat].==0.0;dims=2),
