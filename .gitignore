@@ -1,3 +1,5 @@
-*.jl.*.cov
-*.jl.cov
-*.jl.mem
+## Folders to ignore on git
+tabfig/*
+data/raw/*
+data/sims/*
+data/clean/*
