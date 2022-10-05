@@ -9,6 +9,7 @@ using Distributions
 using PanelDataTools # Easy lead/lag/spell functions
 using DataFrames
 using Plots
+using CSV
 
 ## Load modules/functions
 include("convenience.jl") # Functions not part of the model (numerical helper functions)
