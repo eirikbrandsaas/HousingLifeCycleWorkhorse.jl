@@ -2,7 +2,8 @@ function benchpar(;β = 0.98,χ = 0.001,α=1.0,γ=2.0,κ=0.048,d=0.2,
         lc=0.0,lb=0.0,ls=0.0,
         nx = 41,ns=2,nh=2,ne=1,np=3,nν=3,
             ms = 0.0,mb=0.0,welfare = true,
-            contract_type = "convex",)
+            contract_type = "convex",
+            highFWinc = 1.0)
 
     ## Initialize housing and ownership grids
     if ns == 1
@@ -42,6 +43,7 @@ function benchpar(;β = 0.98,χ = 0.001,α=1.0,γ=2.0,κ=0.048,d=0.2,
             CDFe_ini = [0.22, 0.22+0.53, 1.0] # Table I, column 1, FGG (2017 JF)
         end
     end
+    fa = fa*highFWinc
 
     if np == 1
         pgrd = [150.0]
@@ -52,7 +54,7 @@ function benchpar(;β = 0.98,χ = 0.001,α=1.0,γ=2.0,κ=0.048,d=0.2,
     end
     ## Initializing initial x distribution
     nxini = 21
-    dist = LogNormal(log(1.0),2.5) # Try also Normal(), Pareto()
+    dist = LogNormal(log(0.1),3.5) # Try also Normal(), Pareto()
     xgrd_ini,_,CDFx_ini = equiprob_discr(dist,nxini)
 
     CDFν_ini = fill(0.0,nν,ne)
@@ -87,7 +89,7 @@ function benchpar(;β = 0.98,χ = 0.001,α=1.0,γ=2.0,κ=0.048,d=0.2,
         lc = lc, #Fixed cost of changing ownershare (s∈(0,1)!=s' & h==h')
         lb = lb, #Fixed cost of buying shared ownership (s'∈(0,1))
 
-        Ts = 25,
+        Ts = 20,
         Tr = 67,
         Te = 100,
 
@@ -98,7 +100,7 @@ function benchpar(;β = 0.98,χ = 0.001,α=1.0,γ=2.0,κ=0.048,d=0.2,
         egrd = egrd, # Discrete education grid
         νgrd = fill(1.0,nν), # Persistent Income Shock (productivity)
         pgrd = pgrd,
-        agegrd = range(25,stop=100,step=1),
+        agegrd = range(20,stop=100,step=1),
         xgrd_ini = xgrd_ini,
 
         πν = πν,
@@ -110,7 +112,7 @@ function benchpar(;β = 0.98,χ = 0.001,α=1.0,γ=2.0,κ=0.048,d=0.2,
         fa = fa,
 
         ## Simulation
-        N = 6000,
+        N = 10000,
         seed = 221956, # Serial Number
 
         ## Various parameters
