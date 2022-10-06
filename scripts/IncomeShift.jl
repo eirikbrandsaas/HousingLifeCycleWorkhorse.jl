@@ -16,14 +16,16 @@ par.shgrd[2,:] = [false, true, true] # Can't own smallest unit
 
 #
 po = plot(ylim=(0,100))
-plot!(po,momg[1].age,momg[1].own*100,label="Data (low FW)",ylabel="%",color=:blue)
+plot!(po,momg[1].age,momg[1].own*100,label="Data (low FW)",ylabel="%",color=:blue,title="Homeownership")
 plot!(po,aggmom.age,aggmom.own*100,label="Model",color=:blue,linestyle=:dash)
 
 px = plot(ylim=(0,150))
-plot!(px,momg[1].age,momg[1].finwealth,label="data",ylabel="1000s 1995 USD",color=:blue)
-plot!(px,aggmom.age,aggmom.fx,label="model",color=:blue,linestyle=:dash)
+plot!(px,momg[1].age,momg[1].finwealth,label="data",ylabel="1000s 1995 USD",color=:blue,title="Financial Wealth")
+plot!(px,aggmom.age,aggmom.fx,label="model",color=:blue,linestyle=:dash,legend=false)
 
-plot(po,px,xlim=(18,42),plot_title="Model Fit (Low FW)",xlabel="Age")
+pb = plot(po,px,xlim=(18,42),plot_title="Model Fit (Low FW)",xlabel="Age",legend=:topleft)
+savefig(pb,"tabfig/MatchingMoments.pdf")
+pb
 ##
 highFWinc = 1.22
 par = benchpar(ns=length(par.sgrd),nh=length(par.hgrd),nx=length(par.xgrd),ms=par.ms,mb=par.mb,β=par.β,χ=par.χ,ne=length(par.egrd),np=length(par.egrd),d=par.d,nν=length(par.νgrd),
@@ -36,7 +38,7 @@ par.shgrd[2,:] = [false, true, true] # Can't own smallest unit
 @time aggmom, pan = simulate(par,pol,val);
 
 plot!(po,momg[1].age,momg[2].own*100,label="Data (high FW)",ylabel="%",color=:red)
-plot!(po,aggmom.age,aggmom.own*100,label="Model (shifted income)",color=:red,linestyle=:dash)
+plot!(po,aggmom.age,aggmom.own*100,label="Model (low FW, shifted income)",color=:red,linestyle=:dash)
 
 plot!(px,momg[1].age,momg[2].finwealth,label="data",ylabel="1000s 1995 USD",color=:red)
 plot!(px,aggmom.age,aggmom.fx,label="model",color=:red,linestyle=:dot)
