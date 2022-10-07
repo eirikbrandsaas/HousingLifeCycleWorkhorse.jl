@@ -118,6 +118,11 @@ function LoM(par,bc,sc,hc,pn)
     return xn
 end
 
+
+function trans_inc_shock(par,st,iνn,ϵn)
+    par.νgrd[iνn]*par.fa[st.ia+1,st.ie]*(ϵn - 1.0)
+end
+
 function r(par,bc)
     par.rf + par.rm*(bc<0.0)
 end

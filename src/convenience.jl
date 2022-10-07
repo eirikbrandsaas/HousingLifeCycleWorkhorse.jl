@@ -1,6 +1,6 @@
 function benchpar(;β = 0.98,χ = 0.001,α=1.0,γ=2.0,κ=0.048,d=0.2,
         lc=0.0,lb=0.0,ls=0.0,
-        nx = 41,ns=2,nh=2,ne=1,np=3,nν=3,
+        nx = 41,ns=2,nh=2,ne=1,np=3,nν=3,nϵ=1,
             ms = 0.0,mb=0.0,welfare = true,
             contract_type = "convex",
             highFWinc = 1.0)
@@ -44,6 +44,9 @@ function benchpar(;β = 0.98,χ = 0.001,α=1.0,γ=2.0,κ=0.048,d=0.2,
         end
     end
     fa = fa*highFWinc
+
+    ϵgrd = fill(1.0,(nϵ,76))
+    πϵ = fill(1.0/nϵ,(nϵ,76))
 
     if np == 1
         pgrd = [150.0]
@@ -93,23 +96,27 @@ function benchpar(;β = 0.98,χ = 0.001,α=1.0,γ=2.0,κ=0.048,d=0.2,
         Tr = 67,
         Te = 100,
 
-        xgrd = range(start=0.0,stop=1000.0,length=nx), # Wealth
+        xgrd = range(start=-8.0,stop=1000.0,length=nx), # Wealth
         hgrd = hgrd, # Contains all house sizes
         sgrd = sgrd, # 0=rent, 1=own.
         shgrd = shgrd, # Grid for housing×ownership sets (row is tenure (s), column is house quality (h))
         egrd = egrd, # Discrete education grid
         νgrd = fill(1.0,nν), # Persistent Income Shock (productivity)
+        ϵgrd = ϵgrd,
         pgrd = pgrd,
         agegrd = range(20,stop=100,step=1),
         xgrd_ini = xgrd_ini,
 
         πν = πν,
         πp = πp,
+        πϵ = πϵ,
         CDFν_ini = CDFν_ini,
         CDFx_ini = CDFx_ini,
         CDFe_ini = CDFe_ini,
 
         fa = fa,
+
+        nϵ = nϵ,
 
         ## Simulation
         N = 10000,
@@ -167,6 +174,23 @@ function πν_array!(par,σνs,nν)
         end
     end
 
+
+    for (ia,age) in enumerate(par.agegrd)
+        if age < par.Tr
+            if par.nϵ>1
+                par.ϵgrd[:,ia] = collect(range(0.8,stop=1.2,length=par.nϵ))
+            else
+                par.ϵgrd[:,ia] .= 1.0
+            end
+        else
+            iϵmid = ceil(Int,length(par.ϵgrd[:,1])/2)
+            par.ϵgrd[:,ia] .= -Inf64 # Set to -Inf so if it is used everything goes to hell
+            par.ϵgrd[iϵmid,ia] = 1.0 # No income shock for old retires
+            par.πϵ[:,ia] .= 0.0
+            par.πϵ[iϵmid,ia] = 1.0 # Only feasible outcome
+        end
+    end
+
 end
 
 function finwealth(b)
@@ -182,7 +206,7 @@ function rescale_parameters(par,fac)
     par.fa .*= fac
     par.pgrd .*= fac
     par.xgrd_ini .*= fac
-    par = merge(par,(xgrd = range(start=par.xgrd[1],stop=par.xgrd[end]*fac,length=length(par.xgrd)),))
+    par = merge(par,(xgrd = range(start=par.xgrd[1](fac),stop=par.xgrd[end]*fac,length=length(par.xgrd)),))
     par = merge(par,(rentsupport = par.rentsupport*fac,))
     par = merge(par,(rentsupport = par.sellersupport*fac,))
 
