@@ -16,6 +16,7 @@ function indshocks(par)
     indprob = [(
             ν = rand(rng,len),
             p = rand(rng,len),
+            ϵ = rand(rng,len),
             ν_ini = rand(rng,),
             x_ini = rand(rng,),
             e_ini = rand(rng,),
@@ -35,6 +36,11 @@ function simpar(par) # Create numerical objects for simulation
         end
     end
 
+    CDFϵ = similar(par.πϵ);
+    for ia in eachindex(par.agegrd)
+        CDFϵ[:,ia] = CDF_1d(par.πϵ[:,ia])
+    end
+
     CDFp = similar(par.πp)
     for ip in eachindex(par.pgrd)
         CDFp[ip,:] = CDF_1d(par.πp[ip,:])
@@ -42,7 +48,8 @@ function simpar(par) # Create numerical objects for simulation
 
 
     spar = (CDFν = CDFν,
-            CDFp = CDFp)
+            CDFp = CDFp,
+            CDFϵ = CDFϵ)
 end
 
 
@@ -80,10 +87,11 @@ function simulate_ind!(par,spar,probs,Vcond,ccond,cvec,bvec,svec,hvec,xvec,pvec,
 
         if age < par.Te
             νvec[ia+1] = iν = findoutcomeCDF(probs.ν[ia+1],view(spar.CDFν,ia+1,iν,:,ie))
+            ϵn = par.ϵgrd[findoutcomeCDF(probs.ϵ[ia+1],view(spar.CDFϵ,:,ia+1)),st.ia+1]
             svec[ia+1] = is = isc
             hvec[ia+1] = ih = ihc
             pvec[ia+1] = ip = findoutcomeCDF(probs.p[ia+1],view(spar.CDFp,ip,:))
-            xvec[ia+1] = xs = LoM(par,bc,sc,hc,par.pgrd[ip])
+            xvec[ia+1] = xs = LoM(par,bc,sc,hc,par.pgrd[ip]) + trans_inc_shock(par,st,iν,ϵn)
         end
     end
 end

@@ -1,17 +1,19 @@
 function util_exp(par,st,cc,hc,sc,Vnxt)
-  bc = bchoice(par,st,cc,hc,sc)
-  val = util(cc,hc,sc,par)
-  for ipn in eachindex(par.pgrd)
-    for iνn in eachindex(par.νgrd)
-      prob = par.πν[st.ia,st.iν,iνn,st.ie]*par.πp[st.ip,ipn]
-      if prob > 0 # Only calculate next-period val if prob>0
-        xn = LoM(par,bc,sc,hc,par.pgrd[ipn])
-        val += par.β*prob*Vnxt[iνn,ipn](xn)
-      end
+    bc = bchoice(par,st,cc,hc,sc)
+    val = util(cc,hc,sc,par)
+    for iϵn in 1:par.nϵ
+        for ipn in eachindex(par.pgrd)
+            for iνn in eachindex(par.νgrd)
+                prob = par.πν[st.ia,st.iν,iνn,st.ie]*par.πp[st.ip,ipn]*par.πϵ[iϵn,st.ia]
+                if prob > 0 # Only calculate next-period val if prob>0
+                    xn = LoM(par,bc,sc,hc,par.pgrd[ipn]) + trans_inc_shock(par,st,iνn,par.ϵgrd[iϵn,st.ia])
+                    val += par.β*prob*Vnxt[iνn,ipn](xn)
+                end
+            end
+        end
     end
-  end
 
-  return val
+    return val
 end
 
 function decproblem(par,st,Vnxt,vcond,ccond)
