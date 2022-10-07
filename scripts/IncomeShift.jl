@@ -7,7 +7,7 @@ include("../src/HousingLifeCycleWorkhorse.jl")
 moments = CSV.read(joinpath(@__DIR__,"../data/modelinputs/empirical_moments.csv"),DataFrame)
 momg = groupby(moments,:FW)
 
-par = benchpar(ns=2,nh=3,nx=50,ms=0.04,mb=0.02,β=0.97,χ=.066,ne=3,np=3,d=0.1,nν=7)
+par = benchpar(ns=2,nh=3,nx=50,ms=0.04,mb=0.02,β=0.97,χ=.066,ne=3,np=3,d=0.1,nν=7,nϵ=2)
 par.shgrd[1,:] = [true, false, false] # Can only rent smallest two units
 par.shgrd[2,:] = [false, true, true] # Can't own smallest unit
 
@@ -28,7 +28,7 @@ savefig(pb,"tabfig/MatchingMoments.pdf")
 pb
 ##
 highFWinc = 1.22
-par = benchpar(ns=length(par.sgrd),nh=length(par.hgrd),nx=length(par.xgrd),ms=par.ms,mb=par.mb,β=par.β,χ=par.χ,ne=length(par.egrd),np=length(par.egrd),d=par.d,nν=length(par.νgrd),
+par = benchpar(ns=length(par.sgrd),nh=length(par.hgrd),nx=length(par.xgrd),ms=par.ms,mb=par.mb,β=par.β,χ=par.χ,ne=length(par.egrd),np=length(par.egrd),d=par.d,nν=length(par.νgrd),nϵ=par.nϵ,
     highFWinc=highFWinc)
 
 par.shgrd[1,:] = [true, false, false] # Can only rent smallest two units

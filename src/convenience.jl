@@ -45,8 +45,8 @@ function benchpar(;β = 0.98,χ = 0.001,α=1.0,γ=2.0,κ=0.048,d=0.2,
     end
     fa = fa*highFWinc
 
-    ϵgrd = fill(1.0,(nϵ,76))
-    πϵ = fill(1.0/nϵ,(nϵ,76))
+    ϵgrd = fill(1.0,(nϵ,81))
+    πϵ = fill(1.0/nϵ,(nϵ,81))
 
     if np == 1
         pgrd = [150.0]
