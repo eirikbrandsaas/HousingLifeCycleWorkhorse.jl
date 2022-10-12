@@ -204,7 +204,7 @@ function rescale_parameters(par,fac)
     par.fa .*= fac
     par.pgrd .*= fac
     par.xgrd_ini .*= fac
-    par = merge(par,(xgrd = range(start=par.xgrd[1](fac),stop=par.xgrd[end]*fac,length=length(par.xgrd)),))
+    par = merge(par,(xgrd = range(start=par.xgrd[1]*fac,stop=par.xgrd[end]*fac,length=length(par.xgrd)),))
     par = merge(par,(rentsupport = par.rentsupport*fac,))
     par = merge(par,(rentsupport = par.sellersupport*fac,))
 
