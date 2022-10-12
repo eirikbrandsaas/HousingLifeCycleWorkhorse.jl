@@ -1,5 +1,6 @@
-include("../src/HousingLifeCycleWorkhorse.jl")
-
+using HousingLifeCycleWorkhorse
+using BenchmarkTools
+using Plots
 ## Basic usage example. Solves decision problems, then simulates, then plots policy functions, simulated moments, and life-cycle profiles of one individual
 par=benchpar(ns=2,nh=4)
 par.shgrd[1,:] = [true, true, false, false] # Can only rent smallest two units
