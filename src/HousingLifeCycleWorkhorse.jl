@@ -1,3 +1,5 @@
+module HousingLifeCycleWorkhorse
+
 ## Load packages
 using BenchmarkTools
 using Interpolations
@@ -16,3 +18,9 @@ include("fundamentals.jl") # Model fundamentals (budget equation, law of motion,
 include("decisionproblem.jl") # All code for solving HH dec. problem
 include("simulation.jl") # Simulate the households
 include("sharedownership.jl") # Functions that are specific to shared ownership (i.e., s ∈(0,1) instead of s ∈ {0,1})
+
+export benchpar
+export solve_decproblems
+export simulate
+
+end
