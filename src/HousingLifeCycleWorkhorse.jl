@@ -24,7 +24,11 @@ export benchpar
 export solve_decproblems
 export simulate
 
+## export of model fundamentals
+export util, LoM, r
+
 ## Export of various smaller utilities
 export sh2string
+export rescale_parameters
 
 end

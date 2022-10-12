@@ -1,4 +1,4 @@
-include("../src/HousingLifeCycleWorkhorse.jl")
+using HousingLifeCycleWorkhorse
 using Test
 
 
