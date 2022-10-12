@@ -19,8 +19,12 @@ include("decisionproblem.jl") # All code for solving HH dec. problem
 include("simulation.jl") # Simulate the households
 include("sharedownership.jl") # Functions that are specific to shared ownership (i.e., s ∈(0,1) instead of s ∈ {0,1})
 
+## Export of main program things
 export benchpar
 export solve_decproblems
 export simulate
+
+## Export of various smaller utilities
+export sh2string
 
 end

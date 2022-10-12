@@ -1,5 +1,6 @@
-include("../src/HousingLifeCycleWorkhorse.jl")
+using HousingLifeCycleWorkhorse
 
+using BenchmarkTools
 
 ## Testing
 par=benchpar()
