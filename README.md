@@ -4,10 +4,10 @@
 [![Coverage](https://codecov.io/gh/eirikbrandsaas/HousingLifeCycleWorkhorse.jl/branch/main/graph/badge.svg)](https://codecov.io/gh/eirikbrandsaas/HousingLifeCycleWorkhorse.jl)
 
 ## A simple life-cycle model of homeownership
- 1. To use, add the package by URL. Enter the `pkg` mode by typing `]` in an active julia session and then 
+1. To use, add the package by URL. Enter the `pkg` mode by typing `]` in an active julia session and then 
 `add https://github.com/eirikbrandsaas/HousingLifeCycleWorkhorse.jl` 
-   - Alternatively `using Pkg;Pkg.add("https://github.com/eirikbrandsaas/HousingLifeCycleWorkhorse.jl")`
- 2. Run the following lines to solve the model under the benchmark parameters:
+    - Or, similarly, `using Pkg;Pkg.add("https://github.com/eirikbrandsaas/HousingLifeCycleWorkhorse.jl")`
+2. Run the following lines to solve the model under the benchmark parameters:
  ```julia
 ##
 using HousingLifeCycleWorkhorse
@@ -16,6 +16,6 @@ par = benchpar()
 V,pol = solve_decproblems(par)
 agg,pan = simulate(par,pol,V)
 ```
- 3. ...
- 4. Profit
+3. ...
+4. Profit
     
