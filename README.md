@@ -3,7 +3,7 @@
 [![Build Status](https://github.com/eirikbrandsaas/HousingLifeCycleWorkhorse.jl/actions/workflows/CI.yml/badge.svg?branch=main)](https://github.com/eirikbrandsaas/HousingLifeCycleWorkhorse.jl/actions/workflows/CI.yml?query=branch%3Amain)
 [![Coverage](https://codecov.io/gh/eirikbrandsaas/HousingLifeCycleWorkhorse.jl/branch/main/graph/badge.svg)](https://codecov.io/gh/eirikbrandsaas/HousingLifeCycleWorkhorse.jl)
 
-Note: Code is incomplete
+Note: Code is incomplete and preliminary. Missing PDF of model layout.
 
 ## A simple life-cycle model of homeownership
 1. To use, add the package by URL. Enter the `pkg` mode by typing `]` in an active julia session and then 
